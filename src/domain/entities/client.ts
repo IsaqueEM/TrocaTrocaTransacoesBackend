@@ -1,40 +1,73 @@
-export class Clients {
-    private _id: string;
+export class Client {
+    private _clientId: number;
     private _name: string;
-    private _price: number;
-  
-    constructor(id: string, name: string, price: number) {
-      this._id = id;
-      this._name = name;
-      this._price = price;
+    private _cpf: string;
+    private _email: string;
+    private _password: string;
+
+    constructor(clientId: number, name: string, cpf: string, email: string, password: string) {
+        this._clientId = clientId;
+        this._name = name;
+        this._cpf = cpf;
+        this._email = email;
+        this._password = password;
     }
-  
-    // Getters
-    public get id(): string {
-      return this._id;
+
+    get clientId(): number {
+        return this._clientId;
     }
-  
-    public get name(): string {
-      return this._name;
+
+    get name(): string {
+        return this._name;
     }
-  
-    public get price(): number {
-      return this._price;
+
+    get cpf(): string {
+        return this._cpf;
     }
-  
-    // Setters
-    public set name(newName: string) {
-      if (!newName || newName.trim().length === 0) {
-        throw new Error('Name cannot be empty');
-      }
-      this._name = newName;
+
+    get email(): string {
+        return this._email;
     }
-  
-    public set price(newPrice: number) {
-      if (newPrice <= 0) {
-        throw new Error('Price must be greater than zero');
-      }
-      this._price = newPrice;
+
+    get password(): string {
+        return this._password;
     }
-  }
-  
+
+    set clientId(value: number) {
+        this._clientId = value;
+    }
+
+    set name(value: string) {
+        this._name = value;
+    }
+
+    set cpf(value: string) {
+        this._cpf = value;
+    }
+
+    set email(value: string) {
+        this._email = value;
+    }
+
+    set password(value: string) {
+        this._password = value;
+    }
+
+    public static toClientModel(client: any): Client {
+        return new Client(client.clientId, client.name, client.cpf, client.email, client.password);
+    }
+
+    public static toClientModelArray(clients: any[]): Client[] {
+        return clients.map(client => Client.toClientModel(client));
+    }
+
+    public static toClientDatabase(client: Client): any {
+        return {
+            clientId: client.clientId,
+            name: client.name,
+            cpf: client.cpf,
+            email: client.email,
+            password: client.password
+        };
+    }
+}
