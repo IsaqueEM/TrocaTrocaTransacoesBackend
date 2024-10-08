@@ -1,73 +1,79 @@
-export class Transaction {
-    private _transactionId: number;
-    private _accountNumber: string;
-    private _amount: number;
-    private _transactionType: string;
-    private _transactionDate: Date;
+/* create table transacao (
+	id_transacao serial primary key,
+	data_transacao date,
+	valor decimal (10,2),
+	status varchar (20),
+	tipo varchar (20),
+	id_cliente int,
+	foreign key (id_cliente) references cliente (id_cliente)
+); */
 
-    constructor(transactionId: number, accountNumber: string, amount: number, transactionType: string, transactionDate: Date) {
+class Transaction {
+    private _transactionId: number;
+    private _transactionDate: Date;
+    private _value: number;
+    private _status: string;
+    private _type: string;
+    private _clientId: number;
+
+
+    constructor(transactionId: number, transactionDate: Date, value: number, status: string, type: string, clientId: number) {
         this._transactionId = transactionId;
-        this._accountNumber = accountNumber;
-        this._amount = amount;
-        this._transactionType = transactionType;
         this._transactionDate = transactionDate;
+        this._value = value;
+        this._status = status;
+        this._type = type;
+        this._clientId = clientId;
     }
 
     get transactionId(): number {
         return this._transactionId;
     }
 
-    get accountNumber(): string {
-        return this._accountNumber;
-    }
-
-    get amount(): number {
-        return this._amount;
-    }
-
-    get transactionType(): string {
-        return this._transactionType;
-    }
-
     get transactionDate(): Date {
         return this._transactionDate;
+    }
+
+    get value(): number {
+        return this._value;
+    }
+
+    get status(): string {
+        return this._status;
+    }
+
+    get type(): string {
+        return this._type;
+    }
+
+    get clientId(): number {
+        return this._clientId;
     }
 
     set transactionId(value: number) {
         this._transactionId = value;
     }
 
-    set accountNumber(value: string) {
-        this._accountNumber = value;
-    }
-
-    set amount(value: number) {
-        this._amount = value;
-    }
-
-    set transactionType(value: string) {
-        this._transactionType = value;
-    }
-
     set transactionDate(value: Date) {
         this._transactionDate = value;
     }
 
-    public static toTransactionModel(transaction: any): Transaction {
-        return new Transaction(transaction.transactionId, transaction.accountNumber, transaction.amount, transaction.transactionType, transaction.transactionDate);
+    set value(value: number) {
+        this._value = value;
     }
 
-    public static toTransactionModelArray(transactions: any[]): Transaction[] {
-        return transactions.map(transaction => Transaction.toTransactionModel(transaction));
+    set status(value: string) {
+        this._status = value;
     }
 
-    public static toTransactionDatabase(transaction: Transaction): any {
-        return {
-            transactionId: transaction.transactionId,
-            accountNumber: transaction.accountNumber,
-            amount: transaction.amount,
-            transactionType: transaction.transactionType,
-            transactionDate: transaction.transactionDate
-        };
+    set type(value: string) {
+        this._type = value;
     }
+
+    set clientId(value: number) {
+        this._clientId = value;
+    }
+
+    
+
 }

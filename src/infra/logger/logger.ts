@@ -9,10 +9,9 @@ export const logger = winston.createLogger({
       format: 'YYYY-MM-DD hh:mm:ss.SSS A',
     }),
     align(),
-    printf((info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`)
+    printf((info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`),
   ),
   transports: [
-
     new winston.transports.Console({
       format: combine(
         colorize({ all: true }),
@@ -20,8 +19,10 @@ export const logger = winston.createLogger({
           format: 'YYYY-MM-DD hh:mm:ss.SSS A',
         }),
         align(),
-        printf((info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`)
-      )
+        printf(
+          (info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`,
+        ),
+      ),
     }),
     new winston.transports.File({
       filename: 'logs/error.log',
@@ -31,8 +32,10 @@ export const logger = winston.createLogger({
           format: 'YYYY-MM-DD hh:mm:ss.SSS A',
         }),
         align(),
-        printf((info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`)
-      )
+        printf(
+          (info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`,
+        ),
+      ),
     }),
     new winston.transports.File({
       filename: 'logs/combined.log',
@@ -41,8 +44,10 @@ export const logger = winston.createLogger({
           format: 'YYYY-MM-DD hh:mm:ss.SSS A',
         }),
         align(),
-        printf((info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`)
-      )
+        printf(
+          (info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`,
+        ),
+      ),
     }),
   ],
 });
