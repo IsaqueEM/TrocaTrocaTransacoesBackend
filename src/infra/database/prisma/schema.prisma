@@ -7,38 +7,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model account {
-  account_number String        @id @db.VarChar(20)
-  balance        Decimal?      @db.Decimal(10, 2)
-  cpf            String?       @db.VarChar(11)
-  card           card[]
-  transaction    transaction[]
+model Admin {
+  id_admin   Int      @id @default(autoincrement())
+  usuario    String   @unique @db.VarChar(50)
+  senha      String   @db.VarChar(255)
+  id_cliente Int?
+  cliente    Client? @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("admin")
 }
 
-model card {
-  card_id         Int       @id @default(autoincrement())
-  card_name       String?   @db.VarChar(50)
-  card_number     String?   @db.VarChar(16)
-  expiration_date DateTime? @db.Date
-  cvv             String?   @db.VarChar(3)
-  iscredit        Boolean?
-  account_number  String?   @db.VarChar(20)
-  account         account?  @relation(fields: [account_number], references: [account_number], onDelete: NoAction, onUpdate: NoAction)
+
+model Card {
+  id_cartao     Int       @id @default(autoincrement())
+  data_validade DateTime? @db.Date
+  numero_cartao String?   @unique @db.VarChar(16)
+  tipo_cartao   String?   @db.VarChar(10)
+  limite_cartao Decimal?  @db.Decimal(10, 2)
+  id_cliente    Int?
+  cliente       Client?  @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("cartao")
 }
 
-model client {
-  client_id Int     @id @default(autoincrement())
-  name      String? @db.VarChar(100)
-  cpf       String? @unique @db.VarChar(11)
-  email     String? @unique @db.VarChar(100)
-  password  String? @db.VarChar(100)
+model Client {
+  id_cliente Int         @id @default(autoincrement())
+  cpf        String?     @unique @db.VarChar(11)
+  nome       String?     @db.VarChar(50)
+  telefone   String?     @db.VarChar(11)
+  email      String?     @unique @db.VarChar(50)
+  endereco   String?     @db.VarChar(150)
+  admin      Admin[]
+  cartao     Card[]
+  pix        Pix[]
+  relatorio  Report[]
+  transacao  Transaction[]
+
+  @@map("cliente")
 }
 
-model transaction {
-  transaction_id   Int       @id @default(autoincrement())
-  account_number   String?   @db.VarChar(20)
-  amount           Decimal?  @db.Decimal(10, 2)
-  transaction_type String?   @db.VarChar(10)
-  transaction_date DateTime? @db.Timestamp(6)
-  account          account?  @relation(fields: [account_number], references: [account_number], onDelete: NoAction, onUpdate: NoAction)
+model Pix {
+  id_pix     Int      @id @default(autoincrement())
+  tipo_chave String?  @unique @db.VarChar(20)
+  id_cliente Int?
+  cliente    Client? @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("pix")
+}
+
+model Report {
+  id_relatorio   Int       @id @default(autoincrement())
+  data_relatorio DateTime? @db.Date
+  tipo_relatorio String?   @db.VarChar(50)
+  id_cliente     Int?
+  cliente        Client?  @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("relatorio")
+}
+
+model Transaction {
+  id_transacao   Int       @id @default(autoincrement())
+  data_transacao DateTime? @db.Date
+  valor          Decimal?  @db.Decimal(10, 2)
+  status         String?   @db.VarChar(20)
+  tipo           String?   @db.VarChar(20)
+  id_cliente     Int?
+  cliente        Client?  @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("transacao")
 }
