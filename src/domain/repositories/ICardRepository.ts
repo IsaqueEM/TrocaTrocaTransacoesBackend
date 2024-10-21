@@ -1,10 +1,9 @@
-import { Card } from "../entities/Card";
-
+import { Card } from '../entities/Card';
 export interface ICardRepository {
-  save(card: Card): Promise<void>;
-  findByCardNumber(cardNumber: string): Promise<Card>;
-  findById(cardId: number): Promise<Card>;
+  save(card: Card): Promise<Card | null>;
+  findByNumber(cardNumber: string): Promise<Card | null>;
+  findById(cardId: number): Promise<Card | null>;
   findAll(): Promise<Card[]>;
-  update(card: Card): Promise<void>;
-  delete(cardId: number): Promise<void>;
+  update(card: Card): Promise<Card | null>;
+  delete(cardId: number): Promise<Card | null>;
 }

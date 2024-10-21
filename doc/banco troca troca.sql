@@ -7,19 +7,25 @@ create table usuario (
 	foreign key (id_cliente) references cliente (id_cliente)
 );
 
+create table imagem (
+	id_imagem serial primary key,
+	imagem text,
+);
+
 create table cliente (
 	id_cliente serial primary key,
 	cpf varchar (11) unique,
 	nome varchar (50),
 	telefone varchar (11),
 	email varchar (50) unique,
-	endereço varchar (150)
+	endereco varchar (150)
 );	
 
 create table cartao (
 	id_cartao serial primary key,
 	data_validade date,
 	numero_cartao varchar (16) unique,
+	codigo_seguranca varchar (3),
 	tipo_cartao varchar (10),
 	limite_cartao decimal (10,2),
 	id_cliente int,
@@ -48,4 +54,4 @@ create table relatorio (
 	tipo_relatorio varchar (50),
 	id_cliente int,
 	foreign key (id_cliente) references cliente (id_cliente)
-);
+);a

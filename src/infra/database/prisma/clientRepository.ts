@@ -1,8 +1,9 @@
 import { Client } from '../../../domain/entities/Client';
 import { IClientRepository } from '../../../domain/repositories/IClientRepository';
-import { PrismaClient } from '@prisma/client';
 import { ClientMapper } from '../../mapper/ClientMapper';
 import { logger } from '../../logger/logger';
+
+import { PrismaClient } from '@prisma/client';
 export class PrismaClientRepository implements IClientRepository {
   constructor(private prisma: PrismaClient) {}
 

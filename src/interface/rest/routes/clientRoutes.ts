@@ -1,5 +1,7 @@
-import { Router, Request, Response } from 'express';
 import { ClientControllerFactory } from '../../factories/ClientControllerFactory';
+
+
+import { Router, Request, Response } from 'express';
 
 const ClientRoutes = Router();
 const clientController = ClientControllerFactory();
@@ -35,8 +37,7 @@ ClientRoutes.post('/email/', async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).send({ error: 'Internal Server Error' });
   }
-}
-);
+});
 
 ClientRoutes.post('/', async (req: Request, res: Response) => {
   try {
@@ -49,7 +50,9 @@ ClientRoutes.post('/', async (req: Request, res: Response) => {
 
 ClientRoutes.put('/id/:id', async (req: Request, res: Response) => {
   try {
-    const client = await clientController.update(Number(req.params.id), req.body);
+    const client = await clientController.update(
+      req.body,
+    );
     if (!client) {
       res.status(404).send({ error: 'Client not found' });
     }

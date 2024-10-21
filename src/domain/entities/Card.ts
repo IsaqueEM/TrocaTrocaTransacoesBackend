@@ -2,6 +2,7 @@ export class Card {
   private _cardId: number;
   private _expirationDate: Date;
   private _cardNumber: string;
+  private _cvv: string;
   private _cardType: string;
   private _limit: number;
   private _clientId: number;
@@ -10,13 +11,15 @@ export class Card {
     cardId: number,
     expirationDate: Date,
     cardNumber: string,
+    cvv: string,
     cardType: string,
     limit: number,
-    clientId: number
+    clientId: number,
   ) {
     this._cardId = cardId;
     this._expirationDate = expirationDate;
     this._cardNumber = cardNumber;
+    this._cvv = cvv;
     this._cardType = cardType;
     this._limit = limit;
     this._clientId = clientId;
@@ -32,6 +35,10 @@ export class Card {
 
   get cardNumber(): string {
     return this._cardNumber;
+  }
+
+  get cvv(): string {
+    return this._cvv;
   }
 
   get cardType(): string {
@@ -58,6 +65,10 @@ export class Card {
     this._cardNumber = value;
   }
 
+  set cvv(value: string) {
+    this._cvv = value;
+  }
+  
   set cardType(value: string) {
     this._cardType = value;
   }

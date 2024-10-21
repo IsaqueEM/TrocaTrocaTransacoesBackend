@@ -7,50 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id_admin   Int      @id @default(autoincrement())
-  usuario    String   @unique @db.VarChar(50)
-  senha      String   @db.VarChar(255)
-  id_cliente Int?
-  cliente    Client? @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("admin")
-}
-
-
 model Card {
-  id_cartao     Int       @id @default(autoincrement())
-  data_validade DateTime? @db.Date
-  numero_cartao String?   @unique @db.VarChar(16)
-  tipo_cartao   String?   @db.VarChar(10)
-  limite_cartao Decimal?  @db.Decimal(10, 2)
-  id_cliente    Int?
-  cliente       Client?  @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+  id_cartao        Int       @id @default(autoincrement())
+  data_validade    DateTime? @db.Date
+  numero_cartao    String?   @unique @db.VarChar(16)
+  codigo_seguranca String?   @db.VarChar(3)
+  tipo_cartao      String?   @db.VarChar(10)
+  limite_cartao    Decimal?  @db.Decimal(10, 2)
+  id_cliente       Int?
 
   @@map("cartao")
 }
 
 model Client {
-  id_cliente Int         @id @default(autoincrement())
-  cpf        String?     @unique @db.VarChar(11)
-  nome       String?     @db.VarChar(50)
-  telefone   String?     @db.VarChar(11)
-  email      String?     @unique @db.VarChar(50)
-  endereco   String?     @db.VarChar(150)
-  admin      Admin[]
-  cartao     Card[]
-  pix        Pix[]
-  relatorio  Report[]
-  transacao  Transaction[]
+  id_cliente Int     @id @default(autoincrement())
+  cpf        String? @unique @db.VarChar(11)
+  nome       String? @db.VarChar(50)
+  telefone   String? @db.VarChar(11)
+  email      String? @unique @db.VarChar(50)
+  endereco   String? @db.VarChar(150)
 
   @@map("cliente")
 }
 
 model Pix {
-  id_pix     Int      @id @default(autoincrement())
-  tipo_chave String?  @unique @db.VarChar(20)
+  id_pix     Int     @id @default(autoincrement())
+  tipo_chave String? @unique @db.VarChar(20)
   id_cliente Int?
-  cliente    Client? @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("pix")
 }
@@ -58,9 +41,9 @@ model Pix {
 model Report {
   id_relatorio   Int       @id @default(autoincrement())
   data_relatorio DateTime? @db.Date
-  tipo_relatorio String?   @db.VarChar(50)
   id_cliente     Int?
-  cliente        Client?  @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
+  id_imagem      Int?
+  imagem         Image?   @relation(fields: [id_imagem], references: [id_imagem], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("relatorio")
 }
@@ -72,7 +55,23 @@ model Transaction {
   status         String?   @db.VarChar(20)
   tipo           String?   @db.VarChar(20)
   id_cliente     Int?
-  cliente        Client?  @relation(fields: [id_cliente], references: [id_cliente], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("transacao")
+}
+
+model Image {
+  id_imagem Int      @id @default(autoincrement())
+  imagem    String?
+  relatorio Report[]
+
+  @@map("imagem")
+}
+
+model User {
+  id_usuario Int     @id @default(autoincrement())
+  login      String? @unique @db.VarChar(50)
+  senha      String? @db.VarChar(50)
+  id_cliente Int?
+
+  @@map("usuario")
 }

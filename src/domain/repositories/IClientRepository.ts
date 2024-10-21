@@ -1,5 +1,4 @@
 import { Client } from '../entities/Client';
-
 export interface IClientRepository {
   save(client: Client): Promise<Client | null>;
   findByEmail(email: string): Promise<Client | null>;

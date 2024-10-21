@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.SERVER_PORT;
 
 app.use('/api/', HomeRoutes);
-app.use('/api/client/',ClientRoutes);
+app.use('/api/client/', ClientRoutes);
 
 app.listen(port, () => {
   logger.info(`Server is running on http://localhost:${port}`);

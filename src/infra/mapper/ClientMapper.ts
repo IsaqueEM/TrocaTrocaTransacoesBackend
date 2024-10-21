@@ -1,5 +1,5 @@
-import { Client as ClientPrisma } from "@prisma/client" ;
-import { Client } from "../../domain/entities/Client";
+import { Client as ClientPrisma } from '@prisma/client';
+import { Client } from '../../domain/entities/Client';
 export class ClientMapper {
   static toDomain(clientPrisma: ClientPrisma) {
     return new Client(
@@ -8,10 +8,10 @@ export class ClientMapper {
       clientPrisma.nome ?? '',
       clientPrisma.telefone ?? '',
       clientPrisma.email ?? '',
-      clientPrisma.endereco ?? ''
+      clientPrisma.endereco ?? '',
     );
   }
-  //TODO: a database nao tem os atributos declarados 
+  //TODO: a database nao tem os atributos declarados
   //FIX: resolvendo setando na database o que deve ser not null
 
   static toPersistence(client: Client) {
@@ -21,8 +21,7 @@ export class ClientMapper {
       nome: client.name,
       telefone: client.phone,
       email: client.email,
-      endereco: client.address
+      endereco: client.address,
     };
   }
-
 }
