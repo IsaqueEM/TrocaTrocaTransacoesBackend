@@ -1,6 +1,6 @@
 import { Pix } from "@/domain/entities";
 import { IPixRepository } from "@/domain/repositories/IPixRepository";
-import { PixMapper } from "@/infra/mapper/PixMapper";
+import { PixMapper } from "@/infra/mapper/ReportMapper";
 import { logger } from "@/infra/logger/logger";
 
 import { PrismaClient } from "@prisma/client";
